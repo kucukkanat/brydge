@@ -1,0 +1,6 @@
+node_modules
+**/.bin
+**/.dist
+.DS_Store
+.report
+*.mp4
