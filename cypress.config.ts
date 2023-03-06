@@ -2,6 +2,7 @@ import { defineConfig } from "cypress"
 import { CreateAndStartServer } from "./src/server"
 module.exports = defineConfig({
   e2e: {
+    video: false,
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on("before:run", async () => {
