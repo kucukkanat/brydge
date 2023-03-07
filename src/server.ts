@@ -1,13 +1,7 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
+import { PeerID, SignalDataType, SignalEvents } from "./types";
 
-// A signal is a direct message relayed from one peer to another
-// over the signaling server.
-type SignalMessage = {
-    to: string
-    data: any
-    event: string
-}
 
 export async function CreateAndStartServer(_PORT: string) {
     const PORT = _PORT || process.env.PORT || 3000
@@ -50,11 +44,14 @@ export async function CreateAndStartServer(_PORT: string) {
 }
 
 function handleSocketEvents(socket: Socket) {
-    socket.on("signal", ({ to, event, data }: SignalMessage) => {
-        console.log("signal", data)
-        socket.to(to).emit("signal", { from: socket.id, event, data })
+    SignalEvents.forEach(event => {
+        socket.on(event, (data: SignalDataType) => {
+            console.log(event, data)
+            socket.to(data.to).emit(event, { ...data, from: socket.id })
+        })
     })
 
+    // This is currently not used
     socket.on("join", (roomID: string, userID: string) => {
         console.log(`Client ${userID} joined room ${roomID}`)
         socket.join(roomID)

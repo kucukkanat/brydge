@@ -1,6 +1,8 @@
 import { defineConfig } from "cypress"
 import { CreateAndStartServer } from "./src/server"
-module.exports = defineConfig({
+
+export default defineConfig({
+  watchForFileChanges: true,
   e2e: {
     video: false,
     setupNodeEvents(on, config) {
