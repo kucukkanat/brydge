@@ -44,23 +44,22 @@ export async function CreateAndStartServer(_PORT: string) {
 }
 
 function handleSocketEvents(socket: Socket) {
-    SignalEvents.forEach(event => {
-        socket.on(event, (data: SignalDataType) => {
-            console.log(event, data)
-            socket.to(data.to).emit(event, { ...data, from: socket.id })
-        })
+
+    socket.on("signal", (data: any) => {
+        console.log(`Received signal from ${socket.id} to ${data.to}`)
+        socket.to(data.to).emit("signal", { ...data, from: socket.id })
     })
+
 
     // This is currently not used
-    socket.on("join", (roomID: string, userID: string) => {
-        console.log(`Client ${userID} joined room ${roomID}`)
-        socket.join(roomID)
-        socket.to(roomID).emit("user-connected", userID)
+    // socket.on("join", (roomID: string, userID: string) => {
+    //     console.log(`Client ${userID} joined room ${roomID}`)
+    //     socket.join(roomID)
+    //     socket.to(roomID).emit("user-connected", userID)
 
-        socket.on("disconnect", () => {
-            socket.to(roomID).emit("user-disconnected", userID)
-        })
-    })
-
+    //     socket.on("disconnect", () => {
+    //         socket.to(roomID).emit("user-disconnected", userID)
+    //     })
+    // })
 }
 

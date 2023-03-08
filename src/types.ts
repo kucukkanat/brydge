@@ -2,7 +2,7 @@ export type URLString = `http://${string}:${number}${string}` | `https://${strin
 export type PeerID = string
 export type SignalEvents = "offer" | "answer" | "iceCandidate" | "error" | "error" | "connect" | "disconnect"
 
-export const SignalEvents = ["offer", "answer", "iceCandidate", "error"]
+export const SignalEvents = ["offer", "answer", "iceCandidate", "error", "error", "connect", "disconnect"]
 // From property is added on the server side
 export type SignalOffer = { to?: PeerID, from?: PeerID, offer: RTCSessionDescriptionInit }
 export type SignalAnswer = { to?: PeerID, from?: PeerID, answer: RTCSessionDescriptionInit }

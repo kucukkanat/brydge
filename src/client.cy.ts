@@ -1,4 +1,4 @@
-import Peer from "./client"
+import { Peer } from "./client"
 describe('Client suite', () => {
     // beforeEach(() => {
     //     // Cypress starts out with a blank slate for each test
@@ -8,12 +8,17 @@ describe('Client suite', () => {
     //     cy.visit('https://example.cypress.io/todo')
     // }) 
     it("Construct the Peer", () => {
-        const peer1 = new Peer("http://localhost:3000")
-        const peer2 = new Peer("http://localhost:3000")
+        const peer1 = new Peer()
+        const peer2 = new Peer()
         setTimeout(() => {
-            peer2.connect(peer1.signalingChannel.socket.id)
+            peer2.connect(peer1.id)
 
         }, 1000)
+
+        setTimeout(() => {
+            console.log(peer2)
+            // peer1.send(peer2.id, "Hello World")
+        }, 3000);
 
     })
 })
