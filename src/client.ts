@@ -1,3 +1,4 @@
+// https://github.com/divanov11/PeerChat
 import { Emitter } from "subscribe"
 import io, { Socket } from "socket.io-client"
 import { PeerID } from "./types"
@@ -7,24 +8,18 @@ export class Peer extends Emitter {
     id: string
     socket: Socket
     ready: boolean
-    constructor() {
+    constructor(signalingServerURL:string) {
         super()
         this.ready = false
 
         // Connect to signaling server
-        this.socket = io("http://localhost:3000")
+        this.socket = io(signalingServerURL || "http://localhost:3000")
         this.socket.on("connect", () => {
             // Acquire ID
             this.id = this.socket.id
             this.emit("ready")
             this.ready = true
         })
-
-        // Create RTCPeerConnection
-
-        // Create random id
-
-
         this.addEventListeners()
     }
     async connect(peerID: PeerID) {
@@ -35,6 +30,7 @@ export class Peer extends Emitter {
                 resolve(null)
             }))
         }
+
         // Create a new RTCPeerConnection        
         const connection = new RTCPeerConnection()
         connection.addEventListener("open", () => {
@@ -42,23 +38,32 @@ export class Peer extends Emitter {
         })
         const dataChannel = connection.createDataChannel("dataChannel")
 
-        // Create an offer and signal
+        // Create an offer 
         console.log(`Creating offer for ${peerID}`)
         const offer = await connection.createOffer()
         await connection.setLocalDescription(offer)
-        console.log(`Sending offer to ${peerID}`)
-        this.signal(peerID, { offer })
-        // Wait until answer is received
-        await new Promise(resolve => {
-
-        })
-
+        
+        // Start collecting ICE Candidates (NO Trickle because trickle is Tricky!)
+        const iceCandidates: RTCIceCandidate[] = []
         connection.onicecandidate = (event) => {
             if (event.candidate) {
-                console.log(`Sending ice candidate to ${peerID}`)
-                this.signal(peerID, { iceCandidate: event.candidate })
+                iceCandidates.push(event.candidate)
+            } else {
+                console.log(`All ice candidates for ${peerID} collected`)
+                this.signal(peerID, { iceCandidates, offer })
             }
         }
+
+        // Wait for answer
+        console.log(`Waiting for answer from ${peerID}`)
+        this.socket.on("answer", async (data: any) => {
+            const { to, from, answer } = data
+            if (to === this.id) {
+                console.log(`Answer received from ${peerID}. Setting remote description.`)
+                await connection.setRemoteDescription(answer)
+            }
+        })
+
         connection.ondatachannel = (event) => {
             event.channel.onmessage = (event) => {
                 console.log(`Received message from ${peerID}: ${event.data}`)
