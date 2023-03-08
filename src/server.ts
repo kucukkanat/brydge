@@ -45,9 +45,14 @@ export async function CreateAndStartServer(_PORT: string) {
 
 function handleSocketEvents(socket: Socket) {
 
-    socket.on("signal", (data: any) => {
+    socket.on("offer", (data: any) => {
         console.log(`Received signal from ${socket.id} to ${data.to}`)
-        socket.to(data.to).emit("signal", { ...data, from: socket.id })
+        socket.to(data.to).emit("offer", { ...data, from: socket.id })
+    })
+
+    socket.on("answer", (data: any) => {
+        console.log(`Received signal from ${socket.id} to ${data.to}`)
+        socket.to(data.to).emit("answer", { ...data, from: socket.id })
     })
 
 
