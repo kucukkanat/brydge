@@ -1,6 +1,5 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
-import { PeerID, SignalDataType, SignalEvents } from "./types";
 interface ISocket extends Socket {
     username?: string;
 }

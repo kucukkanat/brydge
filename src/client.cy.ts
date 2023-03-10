@@ -8,10 +8,11 @@ describe('Client suite', () => {
     //     cy.visit('https://example.cypress.io/todo')
     // }) 
     it("Construct the Peer", () => {
-        const peer1 = new Peer()
-        const peer2 = new Peer()
+        const signalingServerURL = "https://kucukkanat-shiny-winner-g44pr6vj5vfv4q6-3000.preview.app.github.dev"
+        const peer1 = new Peer(`${signalingServerURL}?username=peer1`)
+        const peer2 = new Peer(`${signalingServerURL}?username=peer2`)
         setTimeout(() => {
-            peer2.connect(peer1.id)
+            peer2.connect('peer1')
 
         }, 1000)
 

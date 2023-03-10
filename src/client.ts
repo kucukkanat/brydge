@@ -9,7 +9,7 @@ export class Peer extends Emitter {
     socket: Socket
     ready: boolean
     peerConnections: { [key: string]: RTCPeerConnection }
-    constructor(signalingServerURL:string) {
+    constructor(signalingServerURL?: string) {
         super()
         this.ready = false
 
@@ -61,17 +61,17 @@ export class Peer extends Emitter {
             console.log(`Data channel opened for ${peerID}`)
             dataChannel.send("Hello from " + this.id)
         })
-        
+
         // Wait for answer
         let _this = this
-        function waitForAnswer(){
+        function waitForAnswer() {
             console.log(`Waiting for answer from ${peerID}`)
             _this.socket.once("answer", async (data: any) => {
                 const { from, answer, iceCandidates } = data
                 if (from === peerID) {
                     console.log(`Answer received from ${peerID}. Setting remote description.`)
                     await connection.setRemoteDescription(answer)
-                    iceCandidates.forEach( (iceCandidate: RTCIceCandidate) => {
+                    iceCandidates.forEach((iceCandidate: RTCIceCandidate) => {
                         console.log(`Adding ice candidate from ${peerID}`)
                         connection.addIceCandidate(iceCandidate)
                     })
@@ -88,9 +88,9 @@ export class Peer extends Emitter {
         console.log(`Listening for incoming signals`)
         this.socket.on("offer", async (data: any) => {
             const { from, offer, iceCandidates } = data
-            console.log(`Received offer from ${from}`, {data})
+            console.log(`Received offer from ${from}`, { data })
             const connection = new RTCPeerConnection()
-            
+
             await connection.setRemoteDescription(offer)
             const answer = await connection.createAnswer()
             await connection.setLocalDescription(answer)
@@ -103,7 +103,7 @@ export class Peer extends Emitter {
                     myIceCandidates.push(event.candidate)
                 } else {
                     console.log(`All ice candidates for ${from} collected sending answer`)
-                    this.socket.emit("answer", {to: from, iceCandidates:myIceCandidates, answer })
+                    this.socket.emit("answer", { to: from, iceCandidates: myIceCandidates, answer })
                 }
             }
 
@@ -118,15 +118,15 @@ export class Peer extends Emitter {
                 console.log(`Connection opened for ${from}`)
             }
             )
-            iceCandidates.forEach( (iceCandidate: RTCIceCandidate) => {
+            iceCandidates.forEach((iceCandidate: RTCIceCandidate) => {
                 console.log(`Adding ice candidate from ${from}`)
                 connection.addIceCandidate(iceCandidate)
             }
             )
-            
-            
+
+
         })
     }
-    
+
 
 }
