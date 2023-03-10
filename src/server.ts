@@ -1,13 +1,21 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import { PeerID, SignalDataType, SignalEvents } from "./types";
+interface ISocket extends Socket {
+    username?: string;
+}
 
+export const ERRORS = {
+    NO_USERNAME: "NO_USERNAME",
+    USERNAME_UNAVAILABLE: "USERNAME_UNAVAILABLE"
+}
 
-export async function CreateAndStartServer(_PORT: string) {
+export async function CreateAndStartServer(_PORT?: string) {
     const PORT = _PORT || process.env.PORT || 3000
 
     // Create HTTP server
     const httpServer = createServer();
+    CreateSocketServer(httpServer)
     // Server health endpoint
     httpServer.on("request", (req, res) => {
         if (req.url === "/health") {
@@ -20,6 +28,24 @@ export async function CreateAndStartServer(_PORT: string) {
         resolve(null)
     }))
 
+
+}
+
+export const clients: {
+    [key: string]: ISocket
+} = {}
+function findByUsername(username: string) {
+    return clients[username] || null
+}
+function findbyID(id: string) {
+    for (const [_, value] of Object.entries(clients)) {
+        if (value.id === id) {
+            return value
+        }
+    }
+    return null
+}
+function CreateSocketServer(httpServer: ReturnType<typeof createServer>) {
     // Create socket.io server
     const io = new Server(httpServer, {
         cors: {
@@ -29,9 +55,43 @@ export async function CreateAndStartServer(_PORT: string) {
         }
     });
 
-    io.on("connection", socket => {
-        console.log(`New client connected ${socket.id}`);
-        handleSocketEvents(socket)
+    io.on("connection", (socket: ISocket) => {
+        const username = socket.handshake.query.username as string
+        // TEST 1: Reject the connection if client is trying to connect without a username
+        if (!username) {
+            socket.emit("error", ERRORS.NO_USERNAME)
+            socket.disconnect()
+        }
+        // TEST 2: Reject the conenction if client is trying to connect with an already taken username
+        else if (findByUsername(username as string)) {
+            socket.emit("error", ERRORS.USERNAME_UNAVAILABLE)
+            socket.disconnect()
+        } else {
+            // TEST 3: Assign the username to the socket
+            clients[username] = socket
+            socket.username = username
+        }
+
+        console.log(`New client connected ${socket.id} with username ${username}`);
+
+
+        // ================ Handle signaling events ================ //
+
+        // TEST 4: Emit offer event to the client with given username
+        socket.on("offer", (data: any) => {
+            console.log(`Received signal from ${socket.id} to ${data.to}`)
+            // Find the socket with the given username
+            const toID = findByUsername(data.to).id
+            socket.to(toID).emit("offer", { ...data, from: socket.username })
+        })
+
+        // TEST 5: Emit answer event to the client with given username
+        socket.on("answer", (data: any) => {
+            console.log(`Received signal from ${socket.id} to ${data.to}`)
+            // Find the socket with the given username
+            const toID = findByUsername(data.to).id
+            socket.to(toID).emit("answer", { ...data, from: socket.username })
+        })
     });
 
     io.on("disconnect", socket => {
@@ -42,29 +102,3 @@ export async function CreateAndStartServer(_PORT: string) {
         console.log(`Client error ${socket.id}`);
     });
 }
-
-function handleSocketEvents(socket: Socket) {
-
-    socket.on("offer", (data: any) => {
-        console.log(`Received signal from ${socket.id} to ${data.to}`)
-        socket.to(data.to).emit("offer", { ...data, from: socket.id })
-    })
-
-    socket.on("answer", (data: any) => {
-        console.log(`Received signal from ${socket.id} to ${data.to}`)
-        socket.to(data.to).emit("answer", { ...data, from: socket.id })
-    })
-
-
-    // This is currently not used
-    // socket.on("join", (roomID: string, userID: string) => {
-    //     console.log(`Client ${userID} joined room ${roomID}`)
-    //     socket.join(roomID)
-    //     socket.to(roomID).emit("user-connected", userID)
-
-    //     socket.on("disconnect", () => {
-    //         socket.to(roomID).emit("user-disconnected", userID)
-    //     })
-    // })
-}
-
