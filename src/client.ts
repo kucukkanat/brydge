@@ -20,7 +20,6 @@ export class Peer extends Emitter {
             this.id = this.socket.id
             this.emit("ready")
             this.ready = true
-            this.peerConnections = {}
         })
         this.waitForOffers()
     }
@@ -35,11 +34,9 @@ export class Peer extends Emitter {
 
         // Create a new RTCPeerConnection        
         const connection = new RTCPeerConnection()
-        this.peerConnections[peerID] = connection
         const dataChannel = connection.createDataChannel("dataChannel")
 
         // Create an offer 
-        console.log(`Creating offer for ${peerID}`)
         const offer = await connection.createOffer()
         await connection.setLocalDescription(offer)
         // Collect ice candidates
@@ -65,10 +62,6 @@ export class Peer extends Emitter {
             dataChannel.send("Hello from " + this.id)
         })
         
-        
-        
-        
-
         // Wait for answer
         let _this = this
         function waitForAnswer(){
@@ -97,7 +90,7 @@ export class Peer extends Emitter {
             const { from, offer, iceCandidates } = data
             console.log(`Received offer from ${from}`, {data})
             const connection = new RTCPeerConnection()
-            this.peerConnections[from] = connection
+            
             await connection.setRemoteDescription(offer)
             const answer = await connection.createAnswer()
             await connection.setLocalDescription(answer)
