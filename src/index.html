@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>P2P Test</title>
+
+    <style>
+        * {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* font-family: "Comic Sans"; */
+            box-sizing: border-box;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- A chat screen -->
-    <div id="chat">
-        <div id="messages"></div>
-        <input type="text" id="message" placeholder="Type a message">
-        <button id="send">Send</button>
-    </div>
+    <msn-login-body>
+        Hello I am body
+        <msn-avatar>Here be avatar</msn-avatar>
+        <msn-input-text-dropdown label="E-mail address:" placeholder=""></msn-input-text-dropdown>
+    </msn-login-body>
 
     <script type="module" src="./app.ts"></script>
 </body>
+
 </html>

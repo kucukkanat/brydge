@@ -101,3 +101,7 @@ function CreateSocketServer(httpServer: ReturnType<typeof createServer>) {
         console.log(`Client error ${socket.id}`);
     });
 }
+
+if (process.env.RUN_FN) {
+    CreateAndStartServer()
+}
