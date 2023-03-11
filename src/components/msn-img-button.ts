@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 
-const root=""
+const root="."
 class MSNImgButton extends LitElement {
     icon:string
     size:string

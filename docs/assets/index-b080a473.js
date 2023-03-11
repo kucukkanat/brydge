@@ -233,7 +233,7 @@
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9), inset 1px 1px 0px #FFFFFF, inset -1px -1px 0px rgba(97, 211, 244, 0.8);
         border-radius: 6px;
       }
-    `;customElements.define("msn-profile-section",ve);const ps="";class be extends b{firstUpdated(){this.style.width=`${this.size}px`,this.style.height=`${this.size}px`,this.shadowRoot.querySelector("button").style.backgroundImage=`url(${ps}/${this.icon}.png)`}render(){return E`
+    `;customElements.define("msn-profile-section",ve);const ps=".";class be extends b{firstUpdated(){this.style.width=`${this.size}px`,this.style.height=`${this.size}px`,this.shadowRoot.querySelector("button").style.backgroundImage=`url(${ps}/${this.icon}.png)`}render(){return E`
         <button class="message" @click=${this.click}>
         
         </button>
