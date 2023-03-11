@@ -6,7 +6,9 @@ import { defineConfig } from 'vite'
  */
 export default defineConfig({
     root: resolve(__dirname, 'src'),
+    
     build: {
+        copyPublicDir: "./public",
         lib: {
             // Could also be a dictionary or array of multiple entry points
             entry: resolve(__dirname, 'src/client.ts'),

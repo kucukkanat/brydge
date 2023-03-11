@@ -26,6 +26,7 @@
     "vitest": "^0.29.2"
   },
   "dependencies": {
+    "lit": "^2.6.1",
     "simple-peer": "^9.11.1",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
