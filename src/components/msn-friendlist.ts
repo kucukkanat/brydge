@@ -57,7 +57,6 @@ class MSNFriendList extends LitElement {
           </div>
           <!-- Online friends -->
           <div>
-            <msn-friendlist-friend status="busy" nickname="Kahve tiryakisi" statusMessage="Cok mesgulum"></msn-friendlist-friend>
             <msn-friendlist-friend status="online" nickname="Merve" listeningTo="Serdat Ortac - Mesafe"></msn-friendlist-friend>
           </div>
           <div style="background: #fff" class="sticky">

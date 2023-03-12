@@ -74,7 +74,7 @@ class MSNHeader extends LitElement {
   render() {
     return html`<div id="header" class="no-select">
   <div id="window-bar">
-    <img src="live_logo.png" alt="">
+    <img src="img/live_logo.png" alt="">
     <span>Windows Live Messenger</span>
   </div>
   <div id="profile-wrapper">
