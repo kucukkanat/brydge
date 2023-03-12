@@ -9,7 +9,7 @@
     "test:server": "vitest --config=vitest.config.js",
     "build:client": "vite build --config vite.client.config.js",
     "build:server": "vite build --config vite.server.config.js",
-    "build:app": "vite build src --outDir .dist",
+    "build:app": "vite build src --config vite.app.config.js",
     "dev": "vite src --host --port 8080",
     "doc": "typedoc --out docs/typedocs ./src/**.ts"
   },
