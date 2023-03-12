@@ -71,7 +71,7 @@ class Component extends LitElement {
     render() {
         return html`
         <div style="display:flex;justify-content:center;align-items:center;padding: 20px 0px;">
-            <msn-avatar src="avatars/chess.png"></msn-avatar>
+            <msn-avatar src="img/avatars/chess.png"></msn-avatar>
         </div>
         <div class="text-center">
             <h4>Sign in</h4>

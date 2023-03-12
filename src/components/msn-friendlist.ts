@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { common } from './styles';
 
-const friends = new Array(100).fill(0);
+const friends = new Array(20).fill(0);
 
 class MSNFriendList extends LitElement {
     static properties = {
@@ -10,12 +10,13 @@ class MSNFriendList extends LitElement {
     // Define scoped styles right with your component, in plain CSS
     static styles = css`
     ${common}
-      :host {
+    
+      #contacts {
         display: block;
         height: calc(100vh - 288px);
         overflow-y: auto;
         border-top: 1px solid #ddd;
-        padding: 10px 10px;
+        padding: 0 10px;
         // Disable text select
       }
       ul {
@@ -45,6 +46,12 @@ class MSNFriendList extends LitElement {
         display: inline-block;
         margin: 0px 5px;
       }
+      .sticky {
+        width: 100%;
+        z-index: 2;
+        padding: 5px 0px;
+        border-bottom: 1px solid #ddd;
+      }
     `;
 
     constructor() {
@@ -56,18 +63,31 @@ class MSNFriendList extends LitElement {
     // Render the UI as a function of component state
     render() {
         return html`<div id="contacts">
-        <img class="arrow" src="arrow-down.png" alt="" /> <strong>Online (4)</strong>
-        <ul>
+          <div style="background: #fff" class="sticky">
+            <img class="arrow" src="img/arrow-down.png" alt="" /> <strong>Online (4)</strong>
+          </div>
+          <ul>
+              ${
+                  friends.map((friend, index) => {
+                      return html`<li><img src="img/status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>`
+                  })
+              }
+              <li><img src="img/status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
+              <li><img src="img/status/away.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
+              <li><img src="img/status/busy.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
+              
+          </ul>
+          <div style="background: #fff" class="sticky">
+            <img class="arrow" src="img/arrow-down.png" alt="" /> <strong>Offline (4)</strong>
+          </div>
+          <ul>
+            <li><img src="img/status/busy.png" alt="" /> <span class="nickname">My crush </span> - <span class="status muted">Aşkın öyle çok büyük ki Kimseye boyun eğmez Bilmez kıymet bilmez.</span></li>
             ${
-                friends.map((friend, index) => {
-                    return html`<li><img src="status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>`
-                })
-            }
-            <li><img src="status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
-            <li><img src="status/away.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
-            <li><img src="status/busy.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
-            
-        </ul>
+                  friends.map((friend, index) => {
+                      return html`<li><img src="img/status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>`
+                  })
+              }
+          </ul>
     </div>`;
     }
 }

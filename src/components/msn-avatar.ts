@@ -18,7 +18,7 @@ class MSNAvatar extends LitElement {
                   height: 120px;
                   border-radius: 10px;
                   overflow: hidden;
-                  background-image: url("avatar_frame.png");
+                  background-image: url("img/avatar_frame.png");
                   background-repeat: no-repeat;
                   background-position: center center;
                   background-size: 100% 100%;

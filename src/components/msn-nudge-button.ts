@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { common } from './styles';
 
 const root = "."
-class MSNImgButton extends LitElement {
+class Component extends LitElement {
     icon: string
     size: number
     customSize: number[]
@@ -16,6 +16,8 @@ class MSNImgButton extends LitElement {
     ${common}
     :host {
         display: inline-block;
+        width: 35px;
+        height:35px;
     }
     button{
         display: inline-block;
@@ -30,7 +32,8 @@ class MSNImgButton extends LitElement {
         justify-content: center;
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: 19px 19px;
+        background-size: 28px 20px;
+        background-image: url(img/smiley/nudge.png);
     }
     button:hover {
         border:1px solid white;
@@ -41,14 +44,6 @@ class MSNImgButton extends LitElement {
         outline:1px solid #000;
     }
     `;
-    firstUpdated() {
-        
-            this.style.width = `${this.size}px`;
-            this.style.height = `${this.size}px`;
-            this.shadowRoot.querySelector("button").style.backgroundSize = `${this.size-15}px ${this.size-15}px`;
-   
-        this.shadowRoot.querySelector("button").style.backgroundImage = `url(${root}/${this.icon})`;
-    }
     render() {
         return html`
         <button class="message" @click=${this.click}>
@@ -58,4 +53,4 @@ class MSNImgButton extends LitElement {
     }
 }
 
-customElements.define('msn-img-button', MSNImgButton);
+customElements.define('msn-nudge-button', Component);

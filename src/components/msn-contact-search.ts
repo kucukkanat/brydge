@@ -10,7 +10,7 @@ class MSNContactSearch extends LitElement {
       ${common}
       :host {
         display: grid;
-        grid-template-columns: [input] auto [buttons] 80px;
+        grid-template-columns: [input] auto [buttons] 90px;
         
       }
       #input-wrapper {
@@ -52,8 +52,8 @@ class MSNContactSearch extends LitElement {
           <input type="text" placeholder="Find a contact" />
         </div>
         <div id="buttons">
-          <msn-img-button style="justify-content:flex-end" icon="invite"></msn-img-button>
-          <msn-img-button style="justify-content:flex-end" icon="sort-contacts"></msn-img-button>
+          <msn-img-button style="justify-content:flex-end" size=35 icon="img/invite.png"></msn-img-button>
+          <msn-img-button style="justify-content:flex-end" size=35 icon="img/sort-contacts.png"></msn-img-button>
         </div>`;
   }
 }

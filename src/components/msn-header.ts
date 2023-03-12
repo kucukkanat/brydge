@@ -13,7 +13,7 @@ class MSNHeader extends LitElement {
         height: 100px;
         padding-left: 10px;
         padding-top: 5px;
-        background-image: url("backgrounds/background-large.png");
+        background-image: url("img/backgrounds/background-large.png");
         background-size: 100% 100%;
       }
       
@@ -78,7 +78,7 @@ class MSNHeader extends LitElement {
     <span>Windows Live Messenger</span>
   </div>
   <div id="profile-wrapper">
-    <msn-avatar size="62" src="avatars/dog.png"></msn-avatar>
+    <msn-avatar size="62" src="img/avatars/dog.png"></msn-avatar>
     <div id="status">
       <div id="nickname">
         <strong> Kucukkanat </strong> <span class="muted">(busy) <div class="chevron-down"></div><span>

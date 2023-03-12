@@ -13,7 +13,7 @@ class MSNProfileBar extends LitElement {
         height: 40px;
         padding-left: 10px;
         padding-top: 5px;
-        background-image: url("backgrounds/background-large.png");
+        background-image: url("img/backgrounds/background-large.png");
         background-size: 100% 100%;
 
         // Disable text select
@@ -33,9 +33,9 @@ class MSNProfileBar extends LitElement {
   render() {
     return html`
         <div id="app-bar">
-          <msn-img-button icon="navbar-mail"></msn-img-button>
-          <msn-img-button icon="navbar-contacts"></msn-img-button>
-          <msn-img-button icon="navbar-news"></msn-img-button>
+          <msn-img-button icon="img/navbar-mail.png" size="35"></msn-img-button>
+          <msn-img-button icon="img/navbar-contacts.png" size="35"></msn-img-button>
+          <msn-img-button icon="img/navbar-news.png" size="35"></msn-img-button>
         
         </div>
         `;

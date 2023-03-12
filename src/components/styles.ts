@@ -14,4 +14,11 @@ export const common = css`
 .text-center {
     text-align: center;
 }
+.muted {
+    opacity: 0.8;
+}
+.sticky {
+    position: sticky;
+    top: 0;
+}
 `;

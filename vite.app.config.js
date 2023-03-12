@@ -16,6 +16,7 @@ export default defineConfig({
             input: {
                 main: resolve(__dirname, 'src/index.html'),
                 nested: resolve(__dirname, 'src/friendlist.html'),
+                chat: resolve(__dirname, 'src/chat.html'),
             },
         },
     },
