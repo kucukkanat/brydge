@@ -29,19 +29,9 @@ class MSNFriendList extends LitElement {
         align-items: center;
         padding: 5px 0px;
       }
-      ul li:active {
-        background-color: #f5f5f5;
-      }
-      img {
-        width: 20px;
-      }
       .arrow {
         width: 10px;
       }
-      .muted {
-        opacity: 0.7;
-        font-size: 12px;
-      } 
       li span {
         display: inline-block;
         margin: 0px 5px;
@@ -52,12 +42,11 @@ class MSNFriendList extends LitElement {
         padding: 5px 0px;
         border-bottom: 1px solid #ddd;
       }
+      
     `;
 
     constructor() {
         super();
-        // Declare reactive properties
-        this.name = 'World';
     }
 
     // Render the UI as a function of component state
@@ -66,29 +55,89 @@ class MSNFriendList extends LitElement {
           <div style="background: #fff" class="sticky">
             <img class="arrow" src="img/arrow-down.png" alt="" /> <strong>Online (4)</strong>
           </div>
-          <ul>
-              ${
-                  friends.map((friend, index) => {
-                      return html`<li><img src="img/status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>`
-                  })
-              }
-              <li><img src="img/status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
-              <li><img src="img/status/away.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
-              <li><img src="img/status/busy.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>
-              
-          </ul>
+          <!-- Online friends -->
+          <div>
+            <msn-friendlist-friend status="busy" nickname="Kahve tiryakisi" statusMessage="Cok mesgulum"></msn-friendlist-friend>
+            <msn-friendlist-friend status="online" nickname="Merve" listeningTo="Serdat Ortac - Mesafe"></msn-friendlist-friend>
+          </div>
           <div style="background: #fff" class="sticky">
             <img class="arrow" src="img/arrow-down.png" alt="" /> <strong>Offline (4)</strong>
           </div>
-          <ul>
-            <li><img src="img/status/busy.png" alt="" /> <span class="nickname">My crush </span> - <span class="status muted">Aşkın öyle çok büyük ki Kimseye boyun eğmez Bilmez kıymet bilmez.</span></li>
-            ${
-                  friends.map((friend, index) => {
-                      return html`<li><img src="img/status/online.png" alt="" /> <span class="nickname">ThatXPUser </span> - <span class="status muted">i'm sad all day</span></li>`
-                  })
-              }
-          </ul>
+          <!-- Offline friends -->
+          <div>
+            <msn-friendlist-friend status="busy" nickname="Kahve tiryakisi" statusMessage="Cok mesgulum , lorem ipsum dolor sit amet"></msn-friendlist-friend>
+          </div>
     </div>`;
     }
 }
+
+class Friend extends LitElement {
+  
+  static get styles() {
+    return css`
+    ${common}
+    .status {
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    :host>div {
+      display: flex;
+      align-items: center;
+    }
+    :host>div:active {
+      background: #f5f5f5;
+    }
+    :host>div img {
+      width: 20px;
+      padding-right: 5px;
+    }
+    span.status {
+      display: inline-block;
+      font-size: 12px;
+      position: relative;
+      bottom: -3px;
+    }
+    span.separator {
+      padding: 0px 5px;
+    }
+    `;
+  }
+  status: string;
+  nickname: string;
+  statusMessage: string;
+  listeningTo: string;
+  static get properties() {
+    return {
+      nickname: { type: String },
+      status: { type: String },
+      statusMessage: { type: String },
+      listeningTo: { type: String },
+    };
+  }
+  spotifySearch(){
+    return `https://open.spotify.com/search/${encodeURIComponent(this.listeningTo)}`;
+  }
+   render()  {
+    const statusImages:{ [k:string]:string } = {
+      'online': 'img/status/online.png',
+      'away': 'img/status/away.png',
+      'busy': 'img/status/busy.png',
+    }
+      return html`
+        <div>
+          <img src="${statusImages[this.status]}" alt="" /> 
+          <span class="nickname">${this.nickname} </span> 
+          <span class="separator">-</span> 
+          ${
+            this.listeningTo ? 
+            html`<a href=${this.spotifySearch()}><span class="status muted listening-to"> <img src="img/listen-music.png" />Listening to ${this.listeningTo}</span></a>` : 
+            html`<span class="status muted">${this.statusMessage}</span>`
+          }
+      </div>
+      `
+  }
+}
 customElements.define('msn-friendlist', MSNFriendList);
+customElements.define('msn-friendlist-friend', Friend);

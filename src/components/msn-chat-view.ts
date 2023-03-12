@@ -117,7 +117,7 @@ class Component extends LitElement {
         <div id="chat">
             <div id="left">
                 <div id="chat-history">
-
+                    <msn-chat-message message="Hello, how are you?" from="Karen" time="12:00" src="img/avatars/chef.png"></msn-chat-message>
                 </div>
                 <div id="message-input-wrapper">
                     <div id="actions-row">
