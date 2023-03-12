@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, PropertyValueMap } from 'lit';
 import { common } from './styles';
 
 const friends = new Array(20).fill(0);
@@ -118,6 +118,11 @@ class Friend extends LitElement {
   }
   spotifySearch(){
     return `https://open.spotify.com/search/${encodeURIComponent(this.listeningTo)}`;
+  }
+  firstUpdated() {
+    this.addEventListener("dblclick", (e) => {
+      window.location.replace("./chat.html")
+    });
   }
    render()  {
     const statusImages:{ [k:string]:string } = {
