@@ -1,11 +1,13 @@
 import { LitElement, html, css } from 'lit';
+import { common } from './styles';
 
 class MSNProfileBar extends LitElement {
-    static properties = {
-        name: {},
-    };
-    // Define scoped styles right with your component, in plain CSS
-    static styles = css`
+  static properties = {
+    name: {},
+  };
+  // Define scoped styles right with your component, in plain CSS
+  static styles = css`
+      ${common}
       :host {
         display: block;
         height: 40px;
@@ -21,22 +23,22 @@ class MSNProfileBar extends LitElement {
       }
     `;
 
-    constructor() {
-        super();
-        // Declare reactive properties
-        this.name = 'World';
-    }
+  constructor() {
+    super();
+    // Declare reactive properties
+    this.name = 'World';
+  }
 
-    // Render the UI as a function of component state
-    render() {
-        return html`
+  // Render the UI as a function of component state
+  render() {
+    return html`
         <div id="app-bar">
-        <msn-img-button icon="navbar-mail"></msn-img-button>
-        <msn-img-button icon="navbar-contacts"></msn-img-button>
-        <msn-img-button icon="navbar-news"></msn-img-button>
+          <msn-img-button icon="navbar-mail"></msn-img-button>
+          <msn-img-button icon="navbar-contacts"></msn-img-button>
+          <msn-img-button icon="navbar-news"></msn-img-button>
         
-      </div>
+        </div>
         `;
-    }
+  }
 }
 customElements.define('msn-profile-bar', MSNProfileBar);

@@ -1,11 +1,13 @@
 import { LitElement, html, css } from 'lit';
+import { common } from './styles';
 
 class MSNProfileSection extends LitElement {
-    static properties = {
-        name: {},
-    };
-    // Define scoped styles right with your component, in plain CSS
-    static styles = css`
+  static properties = {
+    name: {},
+  };
+  // Define scoped styles right with your component, in plain CSS
+  static styles = css`
+      ${common}
       :host {
         display: block;
         padding: 10px 20px;
@@ -20,15 +22,15 @@ class MSNProfileSection extends LitElement {
       }
     `;
 
-    constructor() {
-        super();
-        // Declare reactive properties
-        this.name = 'World';
-    }
+  constructor() {
+    super();
+    // Declare reactive properties
+    this.name = 'World';
+  }
 
-    // Render the UI as a function of component state
-    render() {
-        return html``;
-    }
+  // Render the UI as a function of component state
+  render() {
+    return html``;
+  }
 }
 customElements.define('msn-profile-section', MSNProfileSection);

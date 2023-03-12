@@ -1,15 +1,17 @@
 import { LitElement, html, css } from 'lit';
+import { common } from './styles';
 
-const root="."
+const root = "."
 class MSNImgButton extends LitElement {
-    icon:string
-    size:string
+    icon: string
+    size: string
     static properties = {
-        icon: {type:String},
-        size: {type:Number}
+        icon: { type: String },
+        size: { type: Number }
     };
     // Define scoped styles right with your component, in plain CSS
     static styles = css`
+    ${common}
     :host {
         display: inline-block;
     }
@@ -41,7 +43,7 @@ class MSNImgButton extends LitElement {
         this.style.height = `${this.size}px`;
         this.shadowRoot.querySelector("button").style.backgroundImage = `url(${root}/${this.icon}.png)`;
     }
-    render() {  
+    render() {
         return html`
         <button class="message" @click=${this.click}>
         

@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { common } from './styles';
 
 const friends = new Array(100).fill(0);
 
@@ -8,6 +9,7 @@ class MSNFriendList extends LitElement {
     };
     // Define scoped styles right with your component, in plain CSS
     static styles = css`
+    ${common}
       :host {
         display: block;
         height: calc(100vh - 288px);
@@ -15,9 +17,6 @@ class MSNFriendList extends LitElement {
         border-top: 1px solid #ddd;
         padding: 10px 10px;
         // Disable text select
-        -webkit-user-select: none; /* Safari */
-        -ms-user-select: none; /* IE 10 and IE 11 */
-        user-select: none; /* Standard syntax */
       }
       ul {
         list-style: none;
@@ -45,6 +44,7 @@ class MSNFriendList extends LitElement {
       li span {
         display: inline-block;
         margin: 0px 5px;
+      }
     `;
 
     constructor() {

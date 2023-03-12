@@ -1,11 +1,13 @@
 import { LitElement, html, css } from 'lit';
+import { common } from './styles';
 
 class MSNContactSearch extends LitElement {
-    static properties = {
-        name: {},
-    };
-    // Define scoped styles right with your component, in plain CSS
-    static styles = css`
+  static properties = {
+    name: {},
+  };
+  // Define scoped styles right with your component, in plain CSS
+  static styles = css`
+      ${common}
       :host {
         display: grid;
         grid-template-columns: [input] auto [buttons] 80px;
@@ -37,22 +39,22 @@ class MSNContactSearch extends LitElement {
       }
     `;
 
-    constructor() {
-        super();
-        // Declare reactive properties
-        this.name = 'World';
-    }
+  constructor() {
+    super();
+    // Declare reactive properties
+    this.name = 'World';
+  }
 
-    // Render the UI as a function of component state
-    render() {
-        return html`
+  // Render the UI as a function of component state
+  render() {
+    return html`
         <div id="input-wrapper">
-            <input type="text" placeholder="Find a contact" />
+          <input type="text" placeholder="Find a contact" />
         </div>
         <div id="buttons">
-        <msn-img-button style="justify-content:flex-end" icon="invite"></msn-img-button>
-        <msn-img-button style="justify-content:flex-end" icon="sort-contacts"></msn-img-button>
+          <msn-img-button style="justify-content:flex-end" icon="invite"></msn-img-button>
+          <msn-img-button style="justify-content:flex-end" icon="sort-contacts"></msn-img-button>
         </div>`;
-    }
+  }
 }
 customElements.define('msn-contact-search', MSNContactSearch);
