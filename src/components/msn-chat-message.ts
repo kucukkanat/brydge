@@ -1,11 +1,12 @@
 import { LitElement, css, html } from "lit";
+import { common } from "./styles";
 
 class Component extends LitElement {
     from:string
     message:string
     static get styles() {
         return css`
-
+            ${common}
         `;
     }
     static get properties() {

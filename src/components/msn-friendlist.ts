@@ -1,73 +1,82 @@
 import { LitElement, html, css, PropertyValueMap } from 'lit';
 import { common } from './styles';
-
-const friends = new Array(20).fill(0);
-
+import downarrow from "../assets/img/arrow-down.png";
+import listenMusic from "../assets/img/listen-music.png"
+import "./msn-drawer"
 class MSNFriendList extends LitElement {
-    static properties = {
-        name: {},
-    };
-    // Define scoped styles right with your component, in plain CSS
-    static styles = css`
+  // Define scoped styles right with your component, in plain CSS
+  static styles = css`
     ${common}
     
-      #contacts {
-        display: block;
-        height: calc(100vh - 288px);
-        overflow-y: auto;
-        border-top: 1px solid #ddd;
-        padding: 0 10px;
-        // Disable text select
-      }
-      ul {
-        list-style: none;
-        padding-left: 10px;
-        margin-top: 5px;
-      }
-      ul li {
-        display: flex;
-        align-items: center;
-        padding: 5px 0px;
-      }
-      .arrow {
-        width: 10px;
-      }
-      li span {
-        display: inline-block;
-        margin: 0px 5px;
-      }
-      .sticky {
-        width: 100%;
-        z-index: 2;
-        padding: 5px 0px;
-        border-bottom: 1px solid #ddd;
-      }
-      
-    `;
-
-    constructor() {
-        super();
+    #contacts {
+      display: block;
+      height: calc(100vh - 288px);
+      overflow-y: auto;
+      border-top: 1px solid #ddd;
+      padding: 0 10px;
+      cursor: pointer;
+      // Disable text select
     }
-
-    // Render the UI as a function of component state
-    render() {
-        return html`<div id="contacts">
-          <div style="background: #fff" class="sticky">
-            <img class="arrow" src="img/arrow-down.png" alt="" /> <strong>Online (4)</strong>
+    ul {
+      list-style: none;
+      padding-left: 10px;
+      margin-top: 5px;
+    }
+    ul li {
+      display: flex;
+      align-items: center;
+      padding: 5px 0px;
+    }
+    .arrow {
+      width: 10px;
+    }
+    li span {
+      display: inline-block;
+      margin: 0px 5px;
+    }
+    .sticky {
+      width: 100%;
+      z-index: 2;
+      padding: 5px 0px;
+      border-bottom: 1px solid #ddd;
+    }
+    `;
+  onlineToggled:boolean
+  offlineToggled:boolean
+  static properties = {
+      onlineToggled: {type:Boolean},
+      offlineToggled: {type:Boolean},
+  };
+    constructor() {
+      super();
+      this.onlineToggled=false
+      this.offlineToggled=false
+    }
+    
+  // Render the UI as a function of component state
+  render() {
+      return html`<div id="contacts">
+        <msn-drawer toggled="true">
+          <div slot="handle" style="background: #fff" class="sticky">
+            <img class="arrow" src=${downarrow} alt="" /> <strong>Online (4)</strong>
           </div>
           <!-- Online friends -->
-          <div>
+          <div slot="content">
             <msn-friendlist-friend status="online" nickname="Merve" listeningTo="Serdat Ortac - Mesafe"></msn-friendlist-friend>
           </div>
-          <div style="background: #fff" class="sticky">
-            <img class="arrow" src="img/arrow-down.png" alt="" /> <strong>Offline (4)</strong>
-          </div>
-          <!-- Offline friends -->
-          <div>
-            <msn-friendlist-friend status="busy" nickname="Kahve tiryakisi" statusMessage="Cok mesgulum , lorem ipsum dolor sit amet"></msn-friendlist-friend>
-          </div>
-    </div>`;
-    }
+        </msn-drawer>
+
+        <msn-drawer>
+        <div slot="handle" style="background: #fff" class="sticky">
+          <img class="arrow" src=${downarrow} alt="" /> <strong>Offline (4)</strong>
+        </div>
+        <!-- Offline friends -->
+        <div slot="content">
+          <msn-friendlist-friend status="busy" nickname="Kahve tiryakisi" statusMessage="Cok mesgulum , lorem ipsum dolor sit amet"></msn-friendlist-friend>
+        </div>
+        </msn-drawer>
+  </div>`;
+  }
 }
 
 class Friend extends LitElement {
@@ -136,7 +145,7 @@ class Friend extends LitElement {
           <span class="separator">-</span> 
           ${
             this.listeningTo ? 
-            html`<a href=${this.spotifySearch()}><span class="status muted listening-to"> <img src="img/listen-music.png" />Listening to ${this.listeningTo}</span></a>` : 
+            html`<a href=${this.spotifySearch()}><span class="status muted listening-to"> <img src=${listenMusic} />Listening to ${this.listeningTo}</span></a>` : 
             html`<span class="status muted">${this.statusMessage}</span>`
           }
       </div>
