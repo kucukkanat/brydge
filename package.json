@@ -10,7 +10,7 @@
     "build:client": "vite build --config vite.client.config.js",
     "build:server": "vite build --config vite.server.config.js",
     "build:app": "vite build src --config vite.app.config.js",
-    "dev": "vite src --host --port 8080",
+    "dev": "vite src --config vite.app.config.js",
     "doc": "typedoc --out docs/typedocs ./src/**.ts"
   },
   "devDependencies": {

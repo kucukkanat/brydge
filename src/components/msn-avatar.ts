@@ -1,5 +1,5 @@
-import { css, html, LitElement } from "lit";
-
+import { css, html, LitElement, unsafeCSS } from "lit";
+import avatarframe from "../assets/img/avatar_frame.png";
 class MSNAvatar extends LitElement {
     src: string
     size: string
@@ -18,7 +18,7 @@ class MSNAvatar extends LitElement {
                   height: 120px;
                   border-radius: 10px;
                   overflow: hidden;
-                  background-image: url("img/avatar_frame.png");
+                  background-image: url(${unsafeCSS(avatarframe)});
                   background-repeat: no-repeat;
                   background-position: center center;
                   background-size: 100% 100%;

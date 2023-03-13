@@ -8,7 +8,7 @@ export default defineConfig({
     root: resolve(__dirname, 'src'),
 
     build: {
-        copyPublicDir: "./public",
+        // copyPublicDir: "./public",
         minify: true,
         outDir: resolve(__dirname, 'docs'),
         emptyOutDir: true,
@@ -19,8 +19,10 @@ export default defineConfig({
                 chat: resolve(__dirname, 'src/chat.html'),
             },
         },
+        assetsInlineLimit:100000000
     },
     preview: {
         port: 8080,
     }
 })
+console.log("YEH")
