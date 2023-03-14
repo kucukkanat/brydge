@@ -3,7 +3,7 @@ import {html,LitElement} from "lit"
 class Component extends LitElement {
     toggled:boolean
     constructor() {
-        super()
+        super() 
     }
     static get properties(){
         return {
